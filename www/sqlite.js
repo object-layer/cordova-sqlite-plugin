@@ -13,7 +13,7 @@ Connection.prototype.connect = function(callback) {
     callback();
   };
   var error = function() {
-    callback(new Error('cannot open database \'' + this.name + '\''));
+    callback(new Error('SQLite Error: cannot open database \'' + this.name + '\''));
   }
   exec(success, error, 'SQLitePlugin', 'open', [options]);
 };
@@ -23,7 +23,7 @@ Connection.prototype.end = function(callback) {
     callback();
   };
   var error = function() {
-    callback(new Error('cannot close database \'' + this.name + '\''));
+    callback(new Error('SQLite Error: cannot close database \'' + this.name + '\''));
   }
   exec(success, error, 'SQLitePlugin', 'close', [{ path: this.name }]);
 };
@@ -41,8 +41,15 @@ Connection.prototype.query = function(sql, values, callback) {
   var success = function(result) {
     callback(null, result);
   };
-  var error = function(err) {
-    callback(new Error(err));
+  var error = function(result) {
+    var err;
+    if (result && result.message) {
+      err = new Error('SQLite Error: ' + result.message);
+    } else {
+      err = new Error('SQLite Error: unknown error');
+    }
+    if (result && result.code != null) err.code = result.code;
+    callback(err);
   };
   exec(success, error, 'SQLitePlugin', 'backgroundExecuteSql', [{
     dbargs: { dbname: this.name },
