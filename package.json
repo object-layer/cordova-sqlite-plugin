@@ -1,7 +1,7 @@
 {
   "name": "cordova-sqlite-plugin",
-  "version": "0.1.0",
-  "description": "SQLite low-level interface for Cordova/PhoneGap",
+  "version": "1.0.0",
+  "description": "Cordova SQLite plugin",
   "cordova": {
     "id": "cordova-sqlite-plugin",
     "platforms": [
@@ -13,7 +13,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/kinda/cordova-sqlite-plugin"
+    "url": "git://github.com/object-layer/cordova-sqlite-plugin"
   },
   "keywords": [
     "sqlite",
