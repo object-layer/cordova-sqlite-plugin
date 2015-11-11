@@ -1,0 +1,46 @@
+{
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
+    },
+    "config_munge": {
+        "files": {
+            "config.xml": {
+                "parents": {
+                    "/*": [
+                        {
+                            "xml": "<feature name=\"Console\"><param name=\"ios-package\" value=\"CDVLogger\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"SQLitePlugin\"><param name=\"ios-package\" value=\"SQLitePlugin\" /></feature>",
+                            "count": 1
+                        }
+                    ]
+                }
+            },
+            "framework": {
+                "parents": {
+                    "libsqlite3.dylib": [
+                        {
+                            "xml": false,
+                            "count": 1
+                        }
+                    ]
+                }
+            }
+        }
+    },
+    "installed_plugins": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "org.objectlayer.example"
+        },
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "org.objectlayer.example"
+        },
+        "cordova-sqlite-plugin": {
+            "PACKAGE_NAME": "org.objectlayer.example"
+        }
+    },
+    "dependent_plugins": {}
+}

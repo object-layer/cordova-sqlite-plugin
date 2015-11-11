@@ -1,0 +1,34 @@
+{
+  "name": "cordova-sqlite-plugin",
+  "version": "2.0.1",
+  "description": "Cordova SQLite plugin with a straightforward low-level API",
+  "cordova": {
+    "id": "cordova-sqlite-plugin",
+    "platforms": [
+      "android",
+      "ios",
+      "windows",
+      "amazon-fireos"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/object-layer/cordova-sqlite-plugin"
+  },
+  "keywords": [
+    "sqlite",
+    "ecosystem:cordova",
+    "cordova-android",
+    "cordova-ios",
+    "cordova-windows",
+    "cordova-amazon-fireos"
+  ],
+  "engines": [
+    {
+      "name": "cordova",
+      "version": ">=3.3.0"
+    }
+  ],
+  "author": "various",
+  "license": "MIT"
+}

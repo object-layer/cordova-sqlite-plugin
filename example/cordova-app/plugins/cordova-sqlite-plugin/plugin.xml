@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="cordova-sqlite-plugin"
+    version="1.0.0">
+
+    <name>Cordova SQLite Plugin</name>
+
+    <license>MIT</license>
+
+    <keywords>sqlite</keywords>
+
+    <description>Low-level interface to SQLite</description>
+    <author>Various</author>
+
+    <engines>
+        <engine name="cordova" version=">=3.3.0" />
+    </engines>
+
+    <js-module src="www/sqlite.js" name="SQLite" />
+
+    <!-- android -->
+    <platform name="android">
+        <!-- Cordova >= 3.0.0 -->
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SQLitePlugin">
+                <param name="android-package" value="io.liteglue.SQLitePlugin"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/io/liteglue/SQLitePlugin.java" target-dir="src/io/liteglue"/>
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <config-file target="config.xml" parent="/*">
+            <feature name="SQLitePlugin">
+                <param name="ios-package" value="SQLitePlugin" />
+            </feature>
+        </config-file>
+
+        <!-- Note: the ios src is based off src/ios implicitly -->
+        <header-file src="src/ios/SQLitePlugin.h" />
+        <source-file src="src/ios/SQLitePlugin.m" />
+        <framework src="libsqlite3.dylib" />
+
+    </platform>
+
+    <platform name="windows">
+        <js-module src="src/windows/SQLiteProxy.js" name="SQLiteProxy">
+            <merges target="" />
+        </js-module>
+
+        <!-- SQLite3 JS module from SQLite3-WinRT/SQLite3JS: -->
+        <js-module src="src/windows/SQLite3-WinRT/SQLite3JS/js/SQLite3.js" name="SQLite3">
+            <merges target="" />
+        </js-module>
+
+        <!-- Thanks to AllJoyn-Cordova / cordova-plugin-alljoyn: -->
+        <framework src="src/windows/SQLite3-WinRT/SQLite3/SQLite3.Windows/SQLite3.Windows.vcxproj" custom="true" type="projectReference" target="windows" />
+        <framework src="src/windows/SQLite3-WinRT/SQLite3/SQLite3.WindowsPhone/SQLite3.WindowsPhone.vcxproj" custom="true" type="projectReference" target="phone" />
+
+    </platform>
+
+    <!-- amazon-fireos -->
+    <platform name="amazon-fireos">
+        <!-- Cordova >= 3.0.0 -->
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="SQLitePlugin">
+                <param name="android-package" value="io.liteglue.SQLitePlugin"/>
+            </feature>
+        </config-file>
+
+        <!-- NOTE: Amazon Fire-OS will take the SQLitePlugin.java from a different location in master/master-rc -->
+        <source-file src="src/android/io/liteglue/SQLitePlugin.java" target-dir="src/io/liteglue"/>
+    </platform>
+
+</plugin>
+
+<!-- vim: set expandtab : -->
