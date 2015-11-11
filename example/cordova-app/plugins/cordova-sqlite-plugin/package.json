@@ -1,7 +1,7 @@
 {
   "name": "cordova-sqlite-plugin",
   "version": "1.0.1",
-  "description": "Cordova SQLite plugin with a straightforward low-level API",
+  "description": "Cordova SQLite plugin",
   "cordova": {
     "id": "cordova-sqlite-plugin",
     "platforms": [

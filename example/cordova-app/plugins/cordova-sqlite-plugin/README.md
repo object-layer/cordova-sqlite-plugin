@@ -1,6 +1,6 @@
 # CordovaSQLitePlugin
 
-Cordova SQLite plugin with a straightforward low-level API.
+Cordova SQLite plugin.
 
 ### Why this module?
 
@@ -23,28 +23,5 @@ cordova plugin add cordova-sqlite-plugin
 ## Usage
 
 ```js
-var SQLite = window.cordova.require('cordova-sqlite-plugin.SQLite');
-
-var sqlite = new SQLite('example');
-
-sqlite.open(function(err) {
-  if (err) throw err;
-  sqlite.query('SELECT ? + ? AS solution', [2, 3], function(err, res) {
-    if (err) throw err;
-    console.log(res.rows[0].solution);
-  });
-});
+// TODO
 ```
-
-## API
-
-### `new SQLite(name)`
-
-Create a document store.
-
-```javascript
-```
-
-## License
-
-MIT

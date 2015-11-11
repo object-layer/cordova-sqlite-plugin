@@ -1,26 +1,34 @@
 var exec = require('cordova/exec');
 
-function SQLite(name) {
+var Connection = function(name) {
   this.name = name;
-}
+};
 
-SQLite.prototype.open = function(callback) {
-  var that = this;
+Connection.prototype.connect = function(callback) {
   var options = {
-    name: that.name,
+    name: this.name,
     dblocation: 'nosync' // TODO: add alternative locations 'docs' and 'libs'
   };
   var success = function() {
     callback();
   };
   var error = function() {
-    callback(new Error('SQLite Error: cannot open database \'' + that.name + '\''));
+    callback(new Error('SQLite Error: cannot open database \'' + this.name + '\''));
   }
   exec(success, error, 'SQLitePlugin', 'open', [options]);
 };
 
-SQLite.prototype.query = function(sql, values, callback) {
-  var that = this;
+Connection.prototype.end = function(callback) {
+  var success = function() {
+    callback();
+  };
+  var error = function() {
+    callback(new Error('SQLite Error: cannot close database \'' + this.name + '\''));
+  }
+  exec(success, error, 'SQLitePlugin', 'close', [{ path: this.name }]);
+};
+
+Connection.prototype.query = function(sql, values, callback) {
   if (typeof values === 'function') {
     callback = values;
     values = [];
@@ -44,20 +52,15 @@ SQLite.prototype.query = function(sql, values, callback) {
     callback(err);
   };
   exec(success, error, 'SQLitePlugin', 'backgroundExecuteSql', [{
-    dbargs: { dbname: that.name },
+    dbargs: { dbname: this.name },
     ex: query
   }]);
 };
 
-SQLite.prototype.close = function(callback) {
-  var that = this;
-  var success = function() {
-    callback();
-  };
-  var error = function() {
-    callback(new Error('SQLite Error: cannot close database \'' + that.name + '\''));
-  }
-  exec(success, error, 'SQLitePlugin', 'close', [{ path: that.name }]);
+var SQLite = function() {};
+
+SQLite.prototype.createConnection = function(name) {
+  return new Connection(name);
 };
 
-module.exports = SQLite;
+module.exports = new SQLite();

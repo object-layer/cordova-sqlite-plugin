@@ -32,13 +32,13 @@
         }
     },
     "installed_plugins": {
-        "cordova-plugin-console": {
-            "PACKAGE_NAME": "org.objectlayer.example"
-        },
         "cordova-plugin-whitelist": {
             "PACKAGE_NAME": "org.objectlayer.example"
         },
-        "cordova-sqlite-plugin": {
+        "cordova-plugin-console": {
+            "PACKAGE_NAME": "org.objectlayer.example"
+        },
+        "org.objectlayer.cordova-sqlite-plugin": {
             "PACKAGE_NAME": "org.objectlayer.example"
         }
     },

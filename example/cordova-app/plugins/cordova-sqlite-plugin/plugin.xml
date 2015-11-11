@@ -17,7 +17,7 @@
         <engine name="cordova" version=">=3.3.0" />
     </engines>
 
-    <js-module src="www/sqlite.js" name="SQLite" />
+    <js-module src="www/sqlite.js" name="sqlite" />
 
     <!-- android -->
     <platform name="android">
