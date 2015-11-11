@@ -1,6 +1,6 @@
 {
   "name": "cordova-sqlite-plugin",
-  "version": "1.0.1",
+  "version": "1.0.0",
   "description": "Cordova SQLite plugin",
   "cordova": {
     "id": "cordova-sqlite-plugin",

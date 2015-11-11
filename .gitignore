@@ -3,3 +3,4 @@
 .metadata/*
 *.swp
 *~
+example/cordova-app/platforms
