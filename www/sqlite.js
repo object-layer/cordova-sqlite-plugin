@@ -31,6 +31,10 @@ SQLite.prototype.query = function(sql, values, callback) {
     params: values
   };
   var success = function(result) {
+    if (result && 'rowsAffected' in result) {
+      result.affectedRows = result.rowsAffected;
+      delete result.rowsAffected;
+    }
     callback(null, result);
   };
   var error = function(result) {

@@ -40,9 +40,64 @@ sqlite.open(function(err) {
 
 ### `new SQLite(name)`
 
-Create a document store.
+Create an instance of the SQLite database with the specified name.
+
+#### Example
 
 ```javascript
+var SQLite = window.cordova.require('cordova-sqlite-plugin.SQLite');
+
+var sqlite = new SQLite('example');
+```
+
+### `sqlite.open(callback)`
+
+Open the SQLite database.
+
+```javascript
+sqlite.open(function(err) {
+  if (err) throw err;
+  // ...
+});
+```
+
+### `sqlite.query(sql, values, callback)`
+
+Query the SQLite database.
+
+```javascript
+sqlite.query('SELECT ? + ? AS solution', [2, 3], function(err, res) {
+  if (err) throw err;
+  console.log(res.rows[0].solution); // => 5
+});
+```
+
+#### `sql`
+
+A string containing the SQL query.
+
+#### `values`
+
+An array of values matching the `?` placeholders in the SQL query.
+
+#### `callback`
+
+A function with the following parameters:
+
+- `error`: an instance of `Error` in case something wrong happens during the query.
+- `result`: an object with the following properties:
+  - `rows`: the rows returned by the query.
+  - `affectedRows`: the number of affected rows by the query.
+  - `insertId`: the auto-generated id by an INSERT query.
+
+### `sqlite.close(callback)`
+
+Close the SQLite database.
+
+```javascript
+sqlite.close(function(err) {
+  if (err) throw err;
+});
 ```
 
 ## License

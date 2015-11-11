@@ -19,7 +19,8 @@ function onDeviceReady() {
     if (err) throw err;
     sqlite.query('SELECT ? + ? AS solution', [2, 3], function(err, res) {
       if (err) throw err;
-      log(res.rows[0].solution);
+      log(JSON.stringify(res));
+      // log(res.rows[0].solution);
       sqlite.close(function(err) {
         if (err) throw err;
         log('Connection closed');
