@@ -30,26 +30,30 @@ SQLite.prototype.query = function(sql, values, callback) {
     sql: sql,
     params: values
   };
-  var success = function(result) {
-    if (result && 'rowsAffected' in result) {
-      result.affectedRows = result.rowsAffected;
-      delete result.rowsAffected;
+  var cb = function(results) {
+    var result = results[0];
+    var type = result.type;
+    result = result.result;
+    if (type === 'success') { // success
+      if (result && 'rowsAffected' in result) {
+        result.affectedRows = result.rowsAffected;
+        delete result.rowsAffected;
+      }
+      callback(null, result);
+    } else { // error
+      var err;
+      if (result && result.message) {
+        err = new Error('SQLite Error: ' + result.message);
+      } else {
+        err = new Error('SQLite Error: unknown error');
+      }
+      if (result && result.code != null) err.code = result.code;
+      callback(err);
     }
-    callback(null, result);
   };
-  var error = function(result) {
-    var err;
-    if (result && result.message) {
-      err = new Error('SQLite Error: ' + result.message);
-    } else {
-      err = new Error('SQLite Error: unknown error');
-    }
-    if (result && result.code != null) err.code = result.code;
-    callback(err);
-  };
-  exec(success, error, 'SQLitePlugin', 'backgroundExecuteSql', [{
+  exec(cb, null, 'SQLitePlugin', 'backgroundExecuteSqlBatch', [{
     dbargs: { dbname: that.name },
-    ex: query
+    executes: [query]
   }]);
 };
 
