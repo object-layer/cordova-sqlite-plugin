@@ -78,7 +78,7 @@ A string containing the SQL query.
 
 #### `values`
 
-An array of values matching the `?` placeholders in the SQL query.
+An optional array of values matching the `?` placeholders in the SQL query.
 
 #### `callback`
 
