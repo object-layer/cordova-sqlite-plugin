@@ -61,7 +61,7 @@ sqlite.open(function(err) {
 });
 ```
 
-### `sqlite.query(sql, values, callback)`
+### `sqlite.query(sql, [values], callback)`
 
 Query the SQLite database.
 
