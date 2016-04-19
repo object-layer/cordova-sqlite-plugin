@@ -17,8 +17,8 @@
     },
     "cordova-sqlite-plugin": {
         "source": {
-            "type": "registry",
-            "id": "cordova-sqlite-plugin"
+            "type": "local",
+            "path": "../.."
         },
         "is_top_level": true,
         "variables": {}
