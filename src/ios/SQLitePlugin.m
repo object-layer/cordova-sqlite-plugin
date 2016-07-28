@@ -12,8 +12,6 @@
 
 #include <regex.h>
 
-#import <Cordova/NSData+Base64.h>
-
 static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** values) {
     if ( argc < 2 ) {
         sqlite3_result_error(context, "SQL function regexp() called with missing arguments.", -1);
