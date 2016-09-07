@@ -12,7 +12,6 @@
 
 #include <regex.h>
 
-#import <Cordova/NSData+Base64.h>
 
 static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** values) {
     if ( argc < 2 ) {
@@ -572,13 +571,15 @@ static void sqlite_regexp(sqlite3_context* context, int argc, sqlite3_value** va
 +(NSString*)getBlobAsBase64String:(const char*)blob_chars
                        withLength:(int)blob_length
 {
-    size_t outputLength = 0;
-    char* outputBuffer = CDVNewBase64Encode(blob_chars, blob_length, true, &outputLength);
-
-    NSString* result = [[NSString alloc] initWithBytesNoCopy:outputBuffer
-                                                      length:outputLength
-                                                    encoding:NSASCIIStringEncoding
-                                                freeWhenDone:YES];
+    NSString* result = NULL;
+    
+    if(blob_chars != NULL) {
+        NSString *data = [[NSString alloc] initWithUTF8String:blob_chars];
+        NSData *dataTake2 = [data dataUsingEncoding:NSUTF8StringEncoding];
+        NSData *base64Data = [dataTake2 base64EncodedDataWithOptions:0];
+        result = [NSString stringWithUTF8String:[base64Data bytes]];
+    }
+    
 #if !__has_feature(objc_arc)
     [result autorelease];
 #endif
