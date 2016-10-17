@@ -100,6 +100,16 @@ sqlite.close(function(err) {
 });
 ```
 
+### `SQLite.deleteDatabase(name, callback)`
+
+Delete the SQLite database with the specified name.
+
+```javascript
+SQLite.deleteDatabase('example', function(err) {
+  if (err) throw err;
+});
+```
+
 ## License
 
 MIT

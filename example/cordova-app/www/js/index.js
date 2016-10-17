@@ -24,6 +24,10 @@ function onDeviceReady() {
       sqlite.close(function(err) {
         if (err) throw err;
         log('Connection closed');
+        SQLite.deleteDatabase('example', function(err) {
+          if (err) throw err;
+          log('Database deleted');
+        });
       });
     });
   });

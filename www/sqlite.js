@@ -15,7 +15,7 @@ SQLite.prototype.open = function(callback) {
   };
   var error = function() {
     callback(new Error('SQLite Error: cannot open database \'' + that.name + '\''));
-  }
+  };
   exec(success, error, 'SQLitePlugin', 'open', [options]);
 };
 
@@ -64,8 +64,22 @@ SQLite.prototype.close = function(callback) {
   };
   var error = function() {
     callback(new Error('SQLite Error: cannot close database \'' + that.name + '\''));
-  }
+  };
   exec(success, error, 'SQLitePlugin', 'close', [{ path: that.name }]);
+};
+
+SQLite.deleteDatabase = function(name, callback) {
+  var options = {
+    path: name,
+    dblocation: 'nosync' // TODO: add alternative locations 'docs' and 'libs'
+  };
+  var success = function() {
+    callback();
+  };
+  var error = function() {
+    callback(new Error('SQLite Error: cannot delete database \'' + name + '\''));
+  };
+  exec(success, error, 'SQLitePlugin', 'delete', [options]);
 };
 
 module.exports = SQLite;
