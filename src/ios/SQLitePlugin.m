@@ -22,6 +22,8 @@
 
 @synthesize openDBs;
 @synthesize appDBPaths;
+@synthesize commandCache;
+@synthesize processingCache;
 
 -(void)pluginInitialize
 {
@@ -30,6 +32,8 @@
     {
         openDBs = [NSMutableDictionary dictionaryWithCapacity:0];
         appDBPaths = [NSMutableDictionary dictionaryWithCapacity:0];
+        commandCache = [NSMutableArray arrayWithCapacity:0];
+        processingCache = NO;
 #if !__has_feature(objc_arc)
         [openDBs retain];
         [appDBPaths retain];
@@ -242,11 +246,31 @@
 }
 
 
+-(void) processCache
+{
+    processingCache = YES;
+    [self.commandDelegate runInBackground:^{
+        @synchronized (self) {
+            if (commandCache.count) {
+                CDVInvokedUrlCommand* cachedCmd = [commandCache objectAtIndex:0];
+                [commandCache removeObjectAtIndex:0];
+                [self executeSqlBatchNow: cachedCmd];
+            }
+            else {
+                processingCache = NO;
+            }
+        }
+    }];
+}
+
+
 -(void) backgroundExecuteSqlBatch: (CDVInvokedUrlCommand*)command
 {
-    [self.commandDelegate runInBackground:^{
-        [self executeSqlBatchNow: command];
-    }];
+    @synchronized (self) {
+        [commandCache addObject:command];
+        if (!processingCache)
+            [self processCache];
+    }
 }
 
 -(void) executeSqlBatchNow: (CDVInvokedUrlCommand*)command
@@ -283,6 +307,7 @@
     }
 
     [self.commandDelegate sendPluginResult:pluginResult callbackId:command.callbackId];
+    [self processCache];
 }
 
 -(void) backgroundExecuteSql: (CDVInvokedUrlCommand*)command
